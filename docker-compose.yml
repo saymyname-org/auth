@@ -1,0 +1,12 @@
+services:
+  postgres:
+    container_name: auth-service
+    image: postgres:16.4
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    volumes:
+      - "./skufifyPgData:/var/lib/postgresql/data"
+    ports:
+      - "${PG_PORT}:5432"
