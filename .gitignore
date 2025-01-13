@@ -80,7 +80,7 @@ CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Testing
-Makefile
+# Makefile
 cmake_install.cmake
 install_manifest.txt
 compile_commands.json
@@ -446,3 +446,6 @@ gradle-app.setting
 .DS_Store
 
 #Project
+docker/openfyPgData
+bin
+s3keys.properties
