@@ -446,6 +446,7 @@ gradle-app.setting
 .DS_Store
 
 #Project
+openfyPgData
 docker/openfyPgData
 bin
 s3keys.properties

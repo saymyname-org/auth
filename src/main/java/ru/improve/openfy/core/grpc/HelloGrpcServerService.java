@@ -4,10 +4,9 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import ru.improve.skufify.grpc.HelloTestGrpc;
 import ru.improve.skufify.grpc.HelloTestProto;
-import ru.improve.skufify.grpc.HelloTestProto.HelloReply;
 
 @GrpcService
-public class HelloGrpcTest extends HelloTestGrpc.HelloTestImplBase {
+public class HelloGrpcServerService extends HelloTestGrpc.HelloTestImplBase {
 
     @Override
     public void sayHello(HelloTestProto.HelloRequest request,
@@ -15,7 +14,7 @@ public class HelloGrpcTest extends HelloTestGrpc.HelloTestImplBase {
 
         System.out.println(request.getName());
 
-        HelloReply helloReply = HelloReply.newBuilder()
+        HelloTestProto.HelloReply helloReply = HelloTestProto.HelloReply.newBuilder()
                 .setMessage("response from server " + request.getName())
                 .build();
 

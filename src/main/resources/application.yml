@@ -1,14 +1,20 @@
+server:
+  port: 8080
+
+grpc:
+  server:
+    port: 9090
+
 spring:
   application:
-    name: openfy
+    name: openfy-auth-service
+  config:
+    import: optional:file:.env[.properties]
 
   datasource:
     url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}
     username: ${PG_USER}
     password: ${PG_PASSWORD}
-#    url: jdbc:postgresql://localhost:5430/openfyDb
-#    username: postgres
-#    password: postgres
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -20,9 +26,6 @@ app:
     secret: N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTczNDAxMT0MDExMjM1
   session:
     duration: 24h
-
-server:
-  port: 8080
 
 logging:
   level:

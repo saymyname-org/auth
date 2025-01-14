@@ -7,6 +7,6 @@ services:
       POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_DB: ${PG_DATABASE}
     volumes:
-      - "./skufifyPgData:/var/lib/postgresql/data"
+      - "./openfyPgData:/var/lib/postgresql/data"
     ports:
       - "${PG_PORT}:5432"
