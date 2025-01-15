@@ -47,7 +47,7 @@ public class AuthConfiguration {
     }
 
     @Bean
-    public GrpcAuthenticationReader grpcAuthenticationReader(){
+    public GrpcAuthenticationReader grpcAuthenticationReader() {
         return new BasicGrpcAuthenticationReader();
     }
 
@@ -63,8 +63,7 @@ public class AuthConfiguration {
                                 .requestMatchers(HttpMethod.POST, SESSIONS + LOGIN).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(conf -> conf
-                        .jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()))
                 .addFilterAfter(new AuthTokenFilter(authService), BearerTokenAuthenticationFilter.class);
 
         return http.build();

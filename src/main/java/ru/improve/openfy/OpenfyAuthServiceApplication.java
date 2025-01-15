@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class OpenfyApplication {
+public class OpenfyAuthServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OpenfyApplication.class, args);
+		SpringApplication.run(OpenfyAuthServiceApplication.class, args);
 	}
 }

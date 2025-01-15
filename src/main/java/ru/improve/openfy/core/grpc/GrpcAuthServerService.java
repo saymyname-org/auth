@@ -5,11 +5,14 @@ import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.security.oauth2.jwt.Jwt;
 import ru.improve.openfy.core.models.Session;
+import ru.improve.openfy.core.models.User;
 import ru.improve.openfy.core.repositories.SessionRepository;
 import ru.improve.openfy.core.security.TokenService;
 import ru.improve.openfy.core.services.SessionService;
 import ru.improve.skufify.grpc.AuthClientGrpc;
 import ru.improve.skufify.grpc.AuthClientService;
+
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @GrpcService
@@ -40,18 +43,23 @@ public class GrpcAuthServerService extends AuthClientGrpc.AuthClientImplBase {
             return;
         }
 
-        createAndSendResponse(session.getUser().getId(), true, responseObserver);
+        createAndSendResponse(session.getUser(), true, responseObserver);
     }
 
-    private void createAndSendResponse(Integer userId, boolean isAuth,
+    private void createAndSendResponse(User user, boolean isAuth,
                                        StreamObserver<AuthClientService.CheckUserResponse> responseObserver) {
 
         AuthClientService.CheckUserResponse checkUserResponse = AuthClientService.CheckUserResponse.newBuilder()
                 .setIsAuth(isAuth)
                 .build();
 
-        if (userId != null) {
-            checkUserResponse.newBuilderForType().setUserId(userId);
+        if (isAuth) {
+            checkUserResponse.newBuilderForType()
+                    .setIsAuth(true)
+                    .setUserId(user.getId())
+                    .addAllRoles(user.getAuthorities().stream()
+                            .map(Objects::toString)
+                            .toList());
         }
 
         responseObserver.onNext(checkUserResponse);
