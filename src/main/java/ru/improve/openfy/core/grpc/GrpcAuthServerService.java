@@ -54,12 +54,13 @@ public class GrpcAuthServerService extends AuthClientGrpc.AuthClientImplBase {
                 .build();
 
         if (isAuth) {
-            checkUserResponse.newBuilderForType()
+            checkUserResponse = checkUserResponse.newBuilderForType()
                     .setIsAuth(true)
                     .setUserId(user.getId())
                     .addAllRoles(user.getAuthorities().stream()
                             .map(Objects::toString)
-                            .toList());
+                            .toList())
+                    .build();
         }
 
         responseObserver.onNext(checkUserResponse);
