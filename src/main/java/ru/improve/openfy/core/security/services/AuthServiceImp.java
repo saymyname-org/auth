@@ -87,7 +87,7 @@ public class AuthServiceImp implements AuthService {
         try {
             Jwt jwtToken = (Jwt) auth.getPrincipal();
 
-            if (!sessionService.checkSessionEnable(tokenService.getSessionId(jwtToken))) {
+            if (!sessionService.checkSessionEnableById(tokenService.getSessionId(jwtToken))) {
                 throw new ServiceException(SESSION_IS_OVER);
             }
 

@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
     Optional<Session> findByUserAndIsEnable(User user, boolean enable);
+
+    Optional<Session> findById(long id);
 }

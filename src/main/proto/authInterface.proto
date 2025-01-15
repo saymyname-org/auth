@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "ru.improve.skufify.grpc";
+option java_outer_classname = "AuthClientService";
+
+service AuthInterface {
+  rpc checkUserByToken (CheckUserRequest) returns (CheckUserResponse) {}
+}
+
+message CheckUserRequest {
+  string token = 1;
+}
+
+message CheckUserResponse {
+  int64 userId = 1;
+  bool isAuth = 2;
+}

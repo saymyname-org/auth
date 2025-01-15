@@ -36,10 +36,15 @@ public class SessionServiceImp implements SessionService {
 
     @Transactional
     @Override
-    public boolean checkSessionEnable(long id) {
+    public boolean checkSessionEnableById(long id) {
         Session session = sessionRepository.findById(id).orElseThrow(
                 () -> new ServiceException(NOT_FOUND));
 
+        return checkSessionEnable(session);
+    }
+
+    @Override
+    public boolean checkSessionEnable(Session session) {
         Instant nowTime = Instant.now();
         if (nowTime.isAfter(session.getExpiredAt())) {
             session.setEnable(false);

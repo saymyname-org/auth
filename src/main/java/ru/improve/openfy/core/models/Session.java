@@ -41,7 +41,6 @@ public class Session {
     @Column(name = "enable")
     private boolean isEnable = true;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id")
     private User user;

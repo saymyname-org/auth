@@ -7,7 +7,9 @@ public interface SessionService {
 
     Session create(User user);
 
-    boolean checkSessionEnable(long id);
+    boolean checkSessionEnableById(long id);
+
+    boolean checkSessionEnable(Session session);
 
     void setUserSessionDisable(User user);
 }
