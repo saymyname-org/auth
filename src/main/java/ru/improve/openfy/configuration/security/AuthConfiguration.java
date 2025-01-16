@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.server.resource.web.authentication.Be
 import org.springframework.security.web.SecurityFilterChain;
 import ru.improve.openfy.api.filter.AuthTokenFilter;
 import ru.improve.openfy.core.security.AuthService;
+import ru.improve.openfy.core.security.CustomAuthorizationEntryPoint;
 
 import static ru.improve.openfy.api.Paths.LOGIN;
 import static ru.improve.openfy.api.Paths.SESSIONS;
@@ -53,7 +54,9 @@ public class AuthConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http, AuthService authService) throws Exception {
+            HttpSecurity http,
+            AuthService authService,
+            CustomAuthorizationEntryPoint authEntryPoint) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -64,7 +67,8 @@ public class AuthConfiguration {
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()))
-                .addFilterAfter(new AuthTokenFilter(authService), BearerTokenAuthenticationFilter.class);
+                .addFilterAfter(new AuthTokenFilter(authService), BearerTokenAuthenticationFilter.class)
+                .exceptionHandling(c -> c.authenticationEntryPoint(authEntryPoint));
 
         return http.build();
     }

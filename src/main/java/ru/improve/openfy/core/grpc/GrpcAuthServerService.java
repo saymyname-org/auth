@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.security.oauth2.jwt.Jwt;
+import ru.improve.openfy.api.error.ServiceException;
 import ru.improve.openfy.core.models.Session;
 import ru.improve.openfy.core.models.User;
 import ru.improve.openfy.core.repositories.SessionRepository;
@@ -34,7 +35,14 @@ public class GrpcAuthServerService extends AuthClientGrpc.AuthClientImplBase {
             return;
         }
 
-        Jwt jwtToken = tokenService.parseJwt(token);
+        Jwt jwtToken;
+        try {
+            jwtToken = tokenService.parseJwt(token);
+        } catch (ServiceException ex) {
+            createAndSendResponse(null, false, responseObserver);
+            return;
+        }
+
         long sessionId = tokenService.getSessionId(jwtToken);
 
         Session session = sessionRepository.findById(sessionId).orElse(null);

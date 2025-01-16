@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: ${APPLICATION_PORT}
 
 grpc:
   server:
-    port: 9090
+    port: ${GRPC_PORT}
 
 spring:
   application:

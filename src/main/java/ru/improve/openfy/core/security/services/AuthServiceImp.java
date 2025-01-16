@@ -106,9 +106,7 @@ public class AuthServiceImp implements AuthService {
             ServiceException exception = (ex.getCode() == SESSION_IS_OVER ?
                     new ServiceException(SESSION_IS_OVER) :
                     new ServiceException(UNAUTHORIZED));
-            handlerExceptionResolver.resolveException(request, response, null, exception);
-
-            return false;
+            throw exception;
         }
     }
 
